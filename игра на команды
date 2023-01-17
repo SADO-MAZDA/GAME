@@ -1,0 +1,195 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace СказочнаяСтрана
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            string userImput;
+            const string militariIntelligence = "РР";
+            const string artillery = "АЛ";
+            const string tanks = "ТК";
+            const string aircraft = "ВВС";
+            const string bringOnTheTroops = "Ввести войска";
+            const string information = "Информация";
+            const string exit = "Выход";
+            int potential = 0;
+            int enemyFullArmy = 100;
+            int fullArmy = 100;
+            int enemyDamage;
+            int damage;
+            int minCountArmy = 0;
+            Random random = new Random();
+
+            Console.WriteLine("Добро пожаловать в игру Сказочная страна. Что бы начать игру нажмите \n"+ bringOnTheTroops+ "\n" +information+"\n" + exit );
+            userImput = Console.ReadLine();
+
+            switch(userImput)
+            {
+                 case bringOnTheTroops:
+                    {
+
+                        while (fullArmy > minCountArmy || enemyFullArmy > minCountArmy)
+                        {
+                            Console.WriteLine("В вашем распоряжении есть : \n разведрота (" + militariIntelligence + ") \n артиллерия (" + artillery + ") \n танки (" + tanks + ") " +
+                            "\n самолеты (" + aircraft + ")");
+                            userImput = Console.ReadLine();
+
+                            switch (userImput)
+                            {
+                                case militariIntelligence:
+
+                                if (fullArmy > minCountArmy)
+                                {
+                                    damage = random.Next(0, 6);
+                                    potential += damage;
+                                    enemyDamage = random.Next(0, 9);
+                                    fullArmy -= enemyDamage;
+                                    enemyFullArmy -= damage;
+                                    if (potential >= 5 && potential <15)
+                                    {
+                                        Console.WriteLine("Вы произвели разведку территорий врага.Стала доступна Артиллерия. ");
+                                    }
+
+                                    else if(potential>= 15 && potential < 23)
+                                    {
+                                        Console.WriteLine("Разведка произведена. Доступно использование танков");
+                                    }
+
+                                    else if (potential >=23 && potential < 40)
+                                    {
+                                        Console.WriteLine("Разведка произведена. Доступно использование авиации");
+                                    }
+
+                                    else 
+                                    {
+                                        Console.WriteLine("Вы произвели разведку территорий врага. Разведки недостаточно для возможности обстрела территории из артиллерии ");
+                                    }  
+                                }
+
+                                else
+                                {
+                                    Console.WriteLine("У вас больше нет возможности продолжать войну.Вы проиграли.");
+                                }
+                                Console.WriteLine("Ваш потенциал - " + potential + "Количество армии - " + fullArmy + " Количество армии врага  - " + enemyFullArmy);
+                                    break;
+                                case artillery:
+                            
+
+                                if (potential >= 5 && fullArmy > minCountArmy)
+                                {
+                                    damage = random.Next(2, 11);
+                                    potential += damage;
+                                    enemyDamage = random.Next(2, 10);
+                                    fullArmy -= enemyDamage;
+                                    enemyFullArmy -= damage;
+                                    
+                                    if (potential >= 15 && potential < 23)
+                                    {
+                                        Console.WriteLine("Артподготовка завершена. Доступно использование танков");
+                                    }
+
+                                    else if (potential >= 23 && potential < 40)
+                                    {
+                                        Console.WriteLine("Артподготовка завершена. Доступно использование авиации");
+                                    }
+
+                                    else
+                                    {
+                                        Console.WriteLine("Артподготовка завершена. Артиллерии недостаточно для возможности обстрела территории .");
+                                    }
+                                }
+
+                                else if (potential < 5 && fullArmy > minCountArmy)
+                                {
+                                    Console.WriteLine("Артиллерия доступна от 5 очков потенциала . Необходима разведка. Танки подрываются на минных полях. ПВО противника сбивают наши самолеты. ");
+                                }
+                                Console.WriteLine("Ваш потенциал - " + potential + "Количество армии - " + fullArmy + " Количество армии врага  - " + enemyFullArmy);
+                            
+                                    break;
+                                case tanks:
+
+                                    if (potential >= 15 && fullArmy > minCountArmy)
+                                    {
+                                        damage = random.Next(4, 12);
+                                        potential += damage;
+                                        enemyDamage = random.Next(2, 12);
+                                        fullArmy -= enemyDamage;
+                                        enemyFullArmy -= damage;
+
+                                         if (potential >= 23 && potential < 40)
+                                        {
+                                            Console.WriteLine("Танки успешно наступают. Доступно использование авиации");
+                                        }
+
+                                        else
+                                        {
+                                            Console.WriteLine(" Танков недостаточно . Необходимо отправить еще.");
+                                        }
+                                    }
+
+                                    else if (potential < 15 && fullArmy > minCountArmy)
+                                    {
+                                        Console.WriteLine("Танки доступны от 15 очков потенциала . ПВО противника сбивают наши самолеты и ракеты средней дальности ");
+                                    }
+
+                                    Console.WriteLine("Ваш потенциал - " + potential + "Количество армии - " + fullArmy + " Количество армии врага  - " + enemyFullArmy);
+                                    break;
+                                case aircraft:
+
+                                    if (potential >= 23 && fullArmy > minCountArmy)
+                                    {
+                                        damage = random.Next(4, 15);
+                                        potential += damage;
+                                        enemyDamage = random.Next(2, 15);
+                                        fullArmy -= enemyDamage;
+                                        enemyFullArmy -= damage;
+                                        Console.WriteLine("Вы уничтожили часть ПВО врага и часть минных полей. Стали доступна авиация.");
+                                    }
+
+                                    else if (potential < 23 && fullArmy > minCountArmy)
+                                    {
+                                        Console.WriteLine("Авиация доступна от 23 очков потенциала . Необходима разведка , артподгатовка либо ввод танков.. ПВО противника сбивают наши самолеты . ");
+                                    }
+
+                                    Console.WriteLine("Ваш потенциал - " + potential + "Количество армии - " + fullArmy + " Количество армии врага  - " + enemyFullArmy);
+                                    break; 
+                            }
+
+                            if ( enemyFullArmy <= 0)
+                            {
+                                Console.WriteLine("Победа . Ваш потенциал - " + potential + "Количество армии - " + fullArmy + " Количество армии врага  - " + enemyFullArmy);
+                                Console.ReadKey();
+                                break;
+
+                            }
+
+                            else if(fullArmy <=0) 
+                            {
+                                Console.WriteLine("Победа врага. Ваш потенциал - " + potential + "Количество армии - " + fullArmy + " Количество армии врага  - " + enemyFullArmy);
+
+                            }
+                        }
+                        break;
+                    }
+                case information:
+                    {
+                        Console.WriteLine("Вам необходимо уничтожить армию противника.");
+                        break;
+                    }
+                case exit:
+                    {
+                        Console.WriteLine("До свидания");
+                        break;
+                    }
+            
+            
+            }     
+        }
+    }
+}
